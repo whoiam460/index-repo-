@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <div>
+            <div>
+                <img src='https://miro.medium.com/fit/c/48/48/1*evkrDMLxJHRlhapocpmZMQ@2x.jpeg' alt="avatar logo" />
+            </div>
+            <div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+        <div>
+            icons
+        </div>
+
+    </header>
+    <main>
+        <section>
+            <h1>7 tools for visualizinga codebase</h1>
+            <p> Need to write a README file, but not sure what to say? If this is a <u> frustration</u> that bothers you
+                frequently, you might
+                consider beefing your document up with a diagram. After all, a picture is worth a thousand words, as the
+                cliche goes.</p>
+            <img src="https://miro.medium.com/v2/resize:fit:1100/0*w952tps00S4Jy1cf" alt='database schema'>
+            <figcaption>Photo by <u> Hanna Morris</u> on <u> <a
+                        href="https://unsplash.com/s/photos/diagram?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+                        Unsplash </a></u></figcaption>
+            <p>This article collects tools that generates graphs for a code repository.</p>
+        </section>
+
+        <section>
+            <h2>Visualize files by size and type</h2>
+            <p>Let’s <strong>start with the most generic</strong> tool, <u> repo-visualizer</u>. It plots files as
+                bubbles,
+                indicating their
+                extension names and
+                sizes with colors and sizes, respectively. It's <u>brought to you </u> by <u>GitHub Next</u> , a lab at
+                GitHub
+                the
+                company, and
+                (naturally) it's packaged as a <u>GitHub Action</u>.</p>
+        </section>
+        <section>
+            <h2>Visualize Docker Compose files</h2>
+            <p>The next tool specifically caters to Docker users, but it’s still language-agnostic. To visualize
+                <u>docker-compose.yml</u>,
+                <a href="https://github.com/pmsipilot/docker-compose-viz">docker-compose-viz</a>:
+            </p>
+            <div>
+                <span>docker run \--rm \-it \--name dcv \-v<br>$(pwd):/input pmsipilot/docker-compose-viz<br>render \-m
+                    image docker-compose.yml</span>
+            </div>
+            <p>Here’s how it would look:</p>
+            <figure>
+                <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*yxLDD4lCKKvP-_Yt.png"
+                    alt="transfer data schema">
+            </figure>
+            <p>I like how it’s also plotting extra information like open ports and mounted volumes.</p>
+        </section>
+        <section>
+            <h2>Visualize <a href="https://en.wikipedia.org/wiki/Call_graph">call graphs</a></h2>
+            <p> <a href="https://github.com/scottrogowski/code2flow">Code2flow</a> supports a couple of
+                <strong>dynamic</strong>
+                languages, including Python, JavaScript, Ruby, and
+                PHP.
+            </p>
+            <p>Here’s the example provided in its README:</p>
+            <div>
+                <span>
+                    code2flow code2flow/engine.py code2flow/python.py -- <br> target-function=code2flow
+                    --downstream-depth=3
+                </span>
+            </div>
+            <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*ley51O4jvxpkKqu11SHIQg.png"
+                alt="scheme reader">
+            <figcaption>Call graph of a student project by <a href="https://twitter.com/pamelafox">Pamela Fox</a>. <a
+                    href="https://inst.eecs.berkeley.edu/~cs61a/sp22/assets/slides/30-Modularity.html#/17">Slides</a> .
+            </figcaption>
+            <p>If <strong>Python</strong> is the only language you care about, you might have heard of <a
+                    href="https://github.com/gak/pycallgraph">pycallgraph</a> ,
+                but -- alas, the
+                bane of open
+                source software projects -- the original author had to abandon the project due to personal time
+                constraints. The most
+                sensible <strong>alternative</strong> I can find is <a
+                    href="https://github.com/davidfraser/pyan">pyan</a> .</p> <br>
+            <span>pyan *.py --uses --no-defines --colored --grouped --annotated -- <br> svg >myuses.svg</span>
+            <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*HLHpLcjzF0n8V9bI.png"
+                alt="data link scheme">
+        </section>
+        <section>
+            <h2>Visualize dependencies</h2>
+            <p>A fundamental functionality of build systems and package managers is dependency resolution. As you’d
+                expect, many
+                visualization tools tap into dependency graphs generated by these software to plot diagrams for a
+                repository.</p>
+            <p>Under the hood, most of these tools use <code>graphviz</code> for the actual plotting work. Therefore,
+                don't be
+                surprised to discover
+                that the diagrams share a similar style.
+            </p>
+            <p> <a href="https://bazel.build/">Bazel</a> is a language-agnostic build system. The developers behind
+                Bazel know its users so well that they
+                put up an
+                <a href="https://blog.bazel.build/2015/06/17/visualize-your-build.html">official guide</a> for
+                visualizing dependencies defined with Bazel:
+            </p>
+            <span>bazel query 'deps(//:main)' --output graph > <br> dependencies.in <br>
+                dot -Tpng < dependencies.in> dependencies.svg</span>
+            <p>It gives something like this:</p>
+            <img src="https://miro.medium.com/v2/resize:fit:402/format:webp/0*f2OSom4CWV4X5dtD.png"
+                alt="basel dependencies scheme">
+            <p>For Python <strong>packages</strong> in an environment, use <a
+                    href="https://pypi.org/project/pipdeptree/">pipdeptree</a> :</p>
+            <span>pipdeptree --graph-output svg > dependencies.svg</span>
+            <img src="https://miro.medium.com/v2/resize:fit:720/0*Xm3JnqySRwwDitAq" alt="python environment schema">
+            <p>For <strong>Java</strong> projects built with <a href="https://maven.apache.org/">Maven</a> ,
+                <a href="https://github.com/ferstl/depgraph-maven-plugin">depgraph-maven-plugin</a> is the way to go:
+            </p>
+            <span>mvn com.github.ferstl:depgraph-maven-plugin:graph</span>
+            <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/0*JPLMYwrGpH-H0jPh.png" alt="module scheme">
+        </section>
+        <section>
+            <h2>I want more interactivity!</h2>
+            <p>Maybe you’re not here to fill up your README; rather, you just want to learn about a repo as quickly and
+                intuitively as
+                possible. If that’s the case, there are some nice tools you can play with:</p>
+            <ul>
+                <li> <a href="https://gource.io/">Gource</a>: A locally-run software.</li>
+                <li> <a href="https://www.codesee.io/">CodeSee</a>: A cloud service that offers paid plans. \</li>
+            </ul>
+            <p>I’m not endorsing either of them, and they are beyond the scope of this post. Nevertheless, this serves
+                as a good point
+                to wrap up this post. Writing an ending is painful, and I’m sure you’re aware of that — Otherwise, you
+                would not have
+                landed on this very article that helps you evade the chore of composing words, would you?</p>
+
+
+        </section>
+
+
+
+
+    </main>
+
+    <footer>
+        footer
+    </footer>
+</body>
+
+</html>
